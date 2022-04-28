@@ -39,6 +39,8 @@ import org.springframework.context.annotation.Primary;
  * load balancer.
  *
  * @author Dave Syer
+ *
+ * Feign 集成 Ribbon 负载均衡自动配置类
  */
 @ConditionalOnClass({ ILoadBalancer.class, Feign.class })
 @Configuration

@@ -27,10 +27,21 @@ import org.springframework.util.StringUtils;
 /**
  * @author Spencer Gibb
  * @author Erik Kringen
+ *
+ * 配置 Hystrix 的 Targeter
  */
 @SuppressWarnings("unchecked")
 class HystrixTargeter implements Targeter {
 
+	/**
+	 * 创建代理对象
+	 * @param factory FeignClientFactoryBean
+	 * @param feign Feign.Builder
+	 * @param context Feign 容器
+	 * @param target
+	 * @return
+	 * @param <T>
+	 */
 	@Override
 	public <T> T target(FeignClientFactoryBean factory, Feign.Builder feign,
 			FeignContext context, Target.HardCodedTarget<T> target) {

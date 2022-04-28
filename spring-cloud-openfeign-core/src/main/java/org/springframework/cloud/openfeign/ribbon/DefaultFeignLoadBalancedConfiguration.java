@@ -25,10 +25,18 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * @author Spencer Gibb
+ *
+ * 默认 Feign 负载均衡配置类
  */
 @Configuration
 class DefaultFeignLoadBalancedConfiguration {
 
+	/**
+	 * 注入 LoadBalancerFeignClient，负载均衡客户端
+	 * @param cachingFactory
+	 * @param clientFactory
+	 * @return
+	 */
 	@Bean
 	@ConditionalOnMissingBean
 	public Client feignClient(CachingSpringLoadBalancerFactory cachingFactory,

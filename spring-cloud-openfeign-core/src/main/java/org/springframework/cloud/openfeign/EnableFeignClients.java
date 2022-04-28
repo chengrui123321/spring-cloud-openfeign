@@ -23,6 +23,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import org.springframework.context.annotation.Import;
+import org.springframework.core.annotation.AliasFor;
 
 /**
  * Scans for interfaces that declare they are feign clients (via
@@ -34,10 +35,13 @@ import org.springframework.context.annotation.Import;
  * @author Spencer Gibb
  * @author Dave Syer
  * @since 1.0
+ *
+ * 扫描 feign 客户端,即 @FeignClient 注解, 动态代理生成代理对象加入 spring 容器中, 并初始化模板信息
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 @Documented
+// 导入 FeignClientsRegistrar#registerBeanDefinitions 导入自定义的 BeanDefinition 信息
 @Import(FeignClientsRegistrar.class)
 public @interface EnableFeignClients {
 
@@ -46,6 +50,8 @@ public @interface EnableFeignClients {
 	 * declarations e.g.: {@code @ComponentScan("org.my.pkg")} instead of
 	 * {@code @ComponentScan(basePackages="org.my.pkg")}.
 	 * @return the array of 'basePackages'.
+	 *
+	 * 等同于 {@link #basePackages()}, 需要扫描的包
 	 */
 	String[] value() default {};
 
@@ -57,6 +63,8 @@ public @interface EnableFeignClients {
 	 * Use {@link #basePackageClasses()} for a type-safe alternative to String-based
 	 * package names.
 	 * @return the array of 'basePackages'.
+	 *
+	 * 需要扫描的包
 	 */
 	String[] basePackages() default {};
 
@@ -67,6 +75,8 @@ public @interface EnableFeignClients {
 	 * Consider creating a special no-op marker class or interface in each package that
 	 * serves no purpose other than being referenced by this attribute.
 	 * @return the array of 'basePackageClasses'.
+	 *
+	 * 需要扫描的类，截取该类路径，获取类所属的包名，加入 basePackages 中，进行扫描
 	 */
 	Class<?>[] basePackageClasses() default {};
 
@@ -77,6 +87,8 @@ public @interface EnableFeignClients {
 	 *
 	 * @see FeignClientsConfiguration for the defaults
 	 * @return list of default configurations
+	 *
+	 * 通过 {@link FeignClientsConfiguration} 来定义 {@link feign.codec.Decoder}、 {@link feign.codec.Encoder}、{@link feign.Contract} 等 bean 的注入
 	 */
 	Class<?>[] defaultConfiguration() default {};
 
@@ -84,6 +96,8 @@ public @interface EnableFeignClients {
 	 * List of classes annotated with @FeignClient. If not empty, disables classpath
 	 * scanning.
 	 * @return list of FeignClient classes
+	 *
+	 * 可以单独指定需要加载的 {@link FeignClient} 客户端
 	 */
 	Class<?>[] clients() default {};
 

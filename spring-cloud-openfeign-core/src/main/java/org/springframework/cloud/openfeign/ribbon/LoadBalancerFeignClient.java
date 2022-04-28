@@ -31,12 +31,19 @@ import org.springframework.cloud.netflix.ribbon.SpringClientFactory;
 
 /**
  * @author Dave Syer
- *
+ * 负载均衡 Feign 客户端
  */
 public class LoadBalancerFeignClient implements Client {
 
+	/**
+	 * 默认请求选项
+	 */
 	static final Request.Options DEFAULT_OPTIONS = new Request.Options();
 
+	/**
+	 * 委派客户端
+	 * 真正执行请求的客户端
+	 */
 	private final Client delegate;
 
 	private CachingSpringLoadBalancerFactory lbClientFactory;

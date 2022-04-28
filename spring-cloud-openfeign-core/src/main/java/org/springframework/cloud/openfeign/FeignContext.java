@@ -24,6 +24,7 @@ import org.springframework.cloud.context.named.NamedContextFactory;
  *
  * @author Spencer Gibb
  * @author Dave Syer
+ * 为每个 feign 客户端创建一个隔离的容器，从容器中可以获取 bean，该容器是 {@link org.springframework.context.ApplicationContext} 的子容器
  */
 public class FeignContext extends NamedContextFactory<FeignClientSpecification> {
 

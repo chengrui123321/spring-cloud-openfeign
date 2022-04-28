@@ -21,9 +21,20 @@ import feign.Target;
 
 /**
  * @author Spencer Gibb
+ *
+ * 目标执行接口，根据 {@link FeignClientFactoryBean#getObject()} 创建代理类
  */
 interface Targeter {
 
+	/**
+	 * 获取目标对象代理类
+	 * @param factory FeignClientFactoryBean
+	 * @param feign Feign.Builder
+	 * @param context FeignContext
+	 * @param target Target
+	 * @return
+	 * @param <T>
+	 */
 	<T> T target(FeignClientFactoryBean factory, Feign.Builder feign,
 			FeignContext context, Target.HardCodedTarget<T> target);
 

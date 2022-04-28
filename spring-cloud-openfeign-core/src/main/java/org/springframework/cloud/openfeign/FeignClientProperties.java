@@ -33,6 +33,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * @author Eko Kurniawan Khannedy
+ *
+ * Feign 属性配置
  */
 @ConfigurationProperties("feign.client")
 public class FeignClientProperties {
@@ -41,6 +43,9 @@ public class FeignClientProperties {
 
 	private String defaultConfig = "default";
 
+	/**
+	 * Feign 客户端配置
+	 */
 	private Map<String, FeignClientConfiguration> config = new HashMap<>();
 
 	public boolean isDefaultToProperties() {
@@ -88,15 +93,29 @@ public class FeignClientProperties {
 
 	/**
 	 * Feign client configuration.
+	 *
+	 * Feign 客户端配置类
 	 */
 	public static class FeignClientConfiguration {
 
+		/**
+		 * 日志级别
+		 */
 		private Logger.Level loggerLevel;
 
+		/**
+		 * 连接超时时间
+		 */
 		private Integer connectTimeout;
 
+		/**
+		 * 读取超时时间
+		 */
 		private Integer readTimeout;
 
+		/**
+		 * 超时类型
+		 */
 		private Class<Retryer> retryer;
 
 		private Class<ErrorDecoder> errorDecoder;

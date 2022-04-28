@@ -53,6 +53,8 @@ import org.springframework.context.annotation.Configuration;
 /**
  * @author Spencer Gibb
  * @author Julien Roy
+ *
+ * Feign 自动配置类
  */
 @Configuration
 @ConditionalOnClass(Feign.class)
@@ -60,6 +62,9 @@ import org.springframework.context.annotation.Configuration;
 		FeignHttpClientProperties.class })
 public class FeignAutoConfiguration {
 
+	/**
+	 * Feign 客户端配置列表
+	 */
 	@Autowired(required = false)
 	private List<FeignClientSpecification> configurations = new ArrayList<>();
 
@@ -68,9 +73,14 @@ public class FeignAutoConfiguration {
 		return HasFeatures.namedFeature("Feign", Feign.class);
 	}
 
+	/**
+	 * 注入 FeignContext
+	 * @return
+	 */
 	@Bean
 	public FeignContext feignContext() {
 		FeignContext context = new FeignContext();
+		// 设置客户端配置
 		context.setConfigurations(this.configurations);
 		return context;
 	}
@@ -79,6 +89,10 @@ public class FeignAutoConfiguration {
 	@ConditionalOnClass(name = "feign.hystrix.HystrixFeign")
 	protected static class HystrixFeignTargeterConfiguration {
 
+		/**
+		 * 如果配置 Hystrix, 注入 HystrixTargeter
+		 * @return
+		 */
 		@Bean
 		@ConditionalOnMissingBean
 		public Targeter feignTargeter() {
@@ -91,6 +105,10 @@ public class FeignAutoConfiguration {
 	@ConditionalOnMissingClass("feign.hystrix.HystrixFeign")
 	protected static class DefaultFeignTargeterConfiguration {
 
+		/**
+		 * 如果没有配置 Hystrix, 注入 DefaultTargeter
+		 * @return
+		 */
 		@Bean
 		@ConditionalOnMissingBean
 		public Targeter feignTargeter() {

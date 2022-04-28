@@ -21,12 +21,24 @@ import feign.Target;
 
 /**
  * @author Spencer Gibb
+ *
+ * 默认 Targeter
  */
 class DefaultTargeter implements Targeter {
 
+	/**
+	 * 生成目标代理对象
+	 * @param factory FeignClientFactoryBean
+	 * @param feign Feign.Builder
+	 * @param context FeignContext
+	 * @param target Target
+	 * @return
+	 * @param <T>
+	 */
 	@Override
 	public <T> T target(FeignClientFactoryBean factory, Feign.Builder feign,
 			FeignContext context, Target.HardCodedTarget<T> target) {
+		// 创建动态代理对象
 		return feign.target(target);
 	}
 
